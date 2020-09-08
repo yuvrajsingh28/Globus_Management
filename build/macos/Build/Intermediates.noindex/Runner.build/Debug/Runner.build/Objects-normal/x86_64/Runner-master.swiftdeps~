@@ -1,0 +1,7 @@
+version: "Apple Swift version 5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)"
+options: "8998f7db386e64484cdb5234ff0ef7ae"
+build_time: [1599507550, 996832000]
+inputs:
+  "/Users/yuvrajsingh/Globus_Management/macos/Runner/MainFlutterWindow.swift": [1596738655, 0]
+  "/Users/yuvrajsingh/Globus_Management/macos/Runner/AppDelegate.swift": [1596738655, 0]
+  "/Users/yuvrajsingh/Globus_Management/macos/Flutter/GeneratedPluginRegistrant.swift": [1599507285, 400377253]
