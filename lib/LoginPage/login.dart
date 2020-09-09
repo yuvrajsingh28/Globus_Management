@@ -5,8 +5,12 @@ import 'constants.dart';
 
 class LogIn extends StatefulWidget {
   final Function onSignUpSelected;
+  final Function(String email, String password) onLogin;
 
-  LogIn({@required this.onSignUpSelected});
+  LogIn({
+    @required this.onSignUpSelected,
+    @required this.onLogin,
+  });
 
   @override
   _LogInState createState() => _LogInState();
@@ -16,6 +20,8 @@ class _LogInState extends State<LogIn> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    String email, password;
 
     return Padding(
       padding:
@@ -38,97 +44,130 @@ class _LogInState extends State<LogIn> {
               child: SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.all(40),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "LOG IN",
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey[700],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Container(
-                        width: 30,
-                        child: Divider(
-                          color: kPrimaryColor,
-                          thickness: 2,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 32,
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Email',
-                          labelText: 'Email',
-                          suffixIcon: Icon(
-                            Icons.mail_outline,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "LOG IN",
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey[700],
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 32,
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Password',
-                          labelText: 'Password',
-                          suffixIcon: Icon(
-                            Icons.lock_outline,
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Container(
+                          width: 30,
+                          child: Divider(
+                            color: kPrimaryColor,
+                            thickness: 2,
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 64,
-                      ),
-                      actionButton("Log In"),
-                      SizedBox(
-                        height: 32,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "You do not have an account?",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14,
+                        SizedBox(
+                          height: 32,
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            hintText: 'Email',
+                            labelText: 'Email',
+                            suffixIcon: Icon(
+                              Icons.mail_outline,
                             ),
                           ),
-                          SizedBox(
-                            width: 8,
+                          validator: (value) {
+                            String pattern =
+                                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                            RegExp regex = RegExp(pattern);
+                            if (value.isEmpty) return 'Enter a email';
+                            if (!regex.hasMatch(value))
+                              return 'Please enter a valid email';
+                          },
+                          onSaved: (value) {
+                            email = value;
+                          },
+                        ),
+                        SizedBox(
+                          height: 32,
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            hintText: 'Password',
+                            labelText: 'Password',
+                            suffixIcon: Icon(
+                              Icons.lock_outline,
+                            ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              widget.onSignUpSelected();
-                            },
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Sign Up",
-                                  style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
+                          validator: (value) {
+                            Pattern pattern =
+                                r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+                            RegExp regex = RegExp(pattern);
+                            if (value.isEmpty) return 'Enter the password';
+                            if (!regex.hasMatch(value))
+                              return 'Enter a stronger password';
+                          },
+                          onSaved: (value) {
+                            password = value;
+                          },
+                        ),
+                        SizedBox(
+                          height: 64,
+                        ),
+                        actionButton(
+                          "Log In",
+                          onPressed: () {
+                            if (_formKey.currentState.validate()) {
+                              _formKey.currentState.save();
+                              widget.onLogin(email, password);
+                            }
+                          },
+                        ),
+                        SizedBox(
+                          height: 32,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "You do not have an account?",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 14,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                widget.onSignUpSelected();
+                              },
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Sign Up",
+                                    style: TextStyle(
+                                      color: kPrimaryColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Icon(
-                                  Icons.arrow_forward,
-                                  color: kPrimaryColor,
-                                ),
-                              ],
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward,
+                                    color: kPrimaryColor,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
