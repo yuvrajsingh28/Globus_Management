@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:globus_management/Dashboard/Modules/Module%20Selection/patients.dart';
 import 'package:globus_management/LoginPage/loginPage.dart';
-import 'package:globus_management/Pages/FaceSheet.dart';
+import 'package:globus_management/Pages/resgistration.dart';
 
 class AuthService {
   handleAuth() {
@@ -10,7 +11,7 @@ class AuthService {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return FaceSheet();
+          return Patients();
         } else {
           return LoginPage();
         }

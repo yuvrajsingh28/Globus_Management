@@ -22,12 +22,19 @@ class _LoginPageState extends State<LoginPage> {
     print(size.width);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
         width: size.width,
         height: size.height,
         child: loading
             ? Center(
-                child: CircularProgressIndicator(),
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/Loading.gif'),
+                    ),
+                  ),
+                ),
               )
             : Stack(
                 children: [

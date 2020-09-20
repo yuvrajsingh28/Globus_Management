@@ -71,8 +71,8 @@ class _LogInState extends State<LogIn> {
                         ),
                         TextFormField(
                           decoration: InputDecoration(
-                            hintText: 'Email',
-                            labelText: 'Email',
+                            hintText: 'Email / Phone No.',
+                            labelText: 'Email / Phone No.',
                             suffixIcon: Icon(
                               Icons.mail_outline,
                             ),
@@ -106,7 +106,7 @@ class _LogInState extends State<LogIn> {
                             RegExp regex = RegExp(pattern);
                             if (value.isEmpty) return 'Enter the password';
                             if (!regex.hasMatch(value))
-                              return 'Enter a stronger password';
+                              return 'Incorret password';
                           },
                           onSaved: (value) {
                             password = value;

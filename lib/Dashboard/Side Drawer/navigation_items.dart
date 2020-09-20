@@ -13,16 +13,16 @@ List<NavigationModel> navigationItems = [
     icon: Icons.insert_chart,
   ),
   NavigationModel(
-    title: 'Errors',
-    icon: Icons.error,
+    title: 'Patients',
+    icon: Icons.people,
   ),
   NavigationModel(
     title: 'Search',
     icon: Icons.search,
   ),
   NavigationModel(
-    title: 'Notifications',
-    icon: Icons.notifications,
+    title: 'About Us',
+    icon: Icons.info_rounded,
   ),
   NavigationModel(
     title: 'Settings',
