@@ -1,5 +1,5 @@
 class PatientCharterForm {
-  bool _agreeToAll;
+  bool _agreeToAll = false;
 
   PatientCharterForm({bool agreeToAll}) {
     this._agreeToAll = agreeToAll;

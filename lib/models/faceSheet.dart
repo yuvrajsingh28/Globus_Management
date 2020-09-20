@@ -21,12 +21,12 @@ class FaceSheet {
   bool _selfPayingCash = false;
   String _provisionalDiagnosis;
   String _operativeSpecialProcedures;
-  bool _result;
-  bool _discharge;
-  bool _reffered;
-  bool _lama;
-  bool _investigationOnly;
-  bool _dO;
+  bool _result = false;
+  bool _discharge = false;
+  bool _reffered = false;
+  bool _lama = false;
+  bool _investigationOnly = false;
+  bool _dO = false;
 
   FaceSheet(
       {String nameOfPatient,
