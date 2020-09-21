@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:globus_management/models/patient.dart';
 import 'package:http/http.dart' as http;
 import 'package:globus_management/Config/constants.dart';
 
@@ -37,6 +35,51 @@ class DocController {
         return true;
       }
       return false;
+    } catch (e) {
+      return ERR;
+    }
+  }
+
+  Future<dynamic> getPatientCurrentDocJsonById(String id) async {
+    String getUrl = uri + '/doc/' + id;
+    try {
+      http.Response response = await client.get(getUrl);
+      if (response.statusCode == 200) {
+        Map<String, dynamic> docJson = jsonDecode(response.body);
+        return docJson;
+      } else {
+        return NOT_FOUND;
+      }
+    } catch (e) {
+      return ERR;
+    }
+  }
+
+  Future<dynamic> getPatientNextDocJsonById(String id) async {
+    String getUrl = uri + '/doc/next/' + id;
+    try {
+      http.Response response = await client.get(getUrl);
+      if (response.statusCode == 200) {
+        Map<String, dynamic> docJson = jsonDecode(response.body);
+        return docJson;
+      } else {
+        return NOT_FOUND;
+      }
+    } catch (e) {
+      return ERR;
+    }
+  }
+
+  Future<dynamic> getPatientPrevDocJsonById(String id) async {
+    String getUrl = uri + '/doc/prev/' + id;
+    try {
+      http.Response response = await client.get(getUrl);
+      if (response.statusCode == 200) {
+        Map<String, dynamic> docJson = jsonDecode(response.body);
+        return docJson;
+      } else {
+        return NOT_FOUND;
+      }
     } catch (e) {
       return ERR;
     }

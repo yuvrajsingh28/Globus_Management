@@ -42,14 +42,20 @@ class PatientController {
     }
   }
 
-  Future<dynamic> addPatient(Patient patient) async {
+  Future<dynamic> addAndGetPatientByName(String name) async {
     String postUrl = uri + '/patient/';
-    Map<String, dynamic> body = patient.toJson();
+    Map<String, dynamic> body = {
+      'name': name,
+    };
     try {
       http.Response response = await client.post(postUrl, body: body);
       if (response.statusCode == 200) {
         String id = jsonDecode(response.body)['id'];
-        return id;
+        Patient patient = Patient(
+          id: id,
+          name: name,
+        );
+        return patient;
       }
       return NOT_ADDED;
     } catch (e) {
@@ -58,11 +64,11 @@ class PatientController {
   }
 
   Future<dynamic> updatePatientById(
-      Patient patient, Map<String, dynamic> change) async {
+      String id, Map<String, dynamic> change) async {
     String postUrl = uri + '/patient/update/';
     Map<String, dynamic> body = {
       'change': change,
-      'id': patient.id,
+      'id': id,
     };
     try {
       http.Response response = await client.post(postUrl, body: body);

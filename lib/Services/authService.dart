@@ -1,17 +1,36 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:globus_management/AppState/appState.dart';
 import 'package:globus_management/Dashboard/Modules/Module%20Selection/patients.dart';
 import 'package:globus_management/LoginPage/loginPage.dart';
-import 'package:globus_management/Pages/resgistration.dart';
 
 class AuthService {
-  handleAuth() {
+  handleAuth(AppState appState) {
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return Patients();
+          return FutureBuilder(
+            future: appState.initPatients(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return Patients(appState: appState);
+              }
+              return Container(
+                color: Colors.white,
+                child: Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/Loading.gif'),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
         } else {
           return LoginPage();
         }
